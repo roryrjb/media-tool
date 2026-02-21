@@ -21,12 +21,8 @@ All commands support `--help` for usage details.
 
 ## Requirements
 
-* Python 3.14+
 * `ffmpeg.exe` and `ffprobe.exe` in your `%PATH%`
-* Python dependencies listed in `requirements.txt` — install with `pip install -r requirements.txt`
 
 ## Build
 
-Requires [uv](https://docs.astral.sh/uv/) (uses `uvx` to run PyInstaller).
-
-Run `build.bat` to build into a single `media-tool.exe`.
+Run `build.bat` to build into a single `media-tool.exe`. Requires [uv](https://docs.astral.sh/uv/).
