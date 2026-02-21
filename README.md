@@ -19,6 +19,6 @@ All commands support `--help` for usage details.
 
 ## Installation
 
-_Technically_ this is all portable Python but I only really care about Windows, therefore there's a simple `build.bat` script that will build the script into a single `media-tool.exe`. It just assumes you have the default Python for Windows installation setup. Also assumes you have `ffmpeg.exe` and `ffprobe.exe` somewhere in your `%PATH%`.
+_Technically_ this is all portable Python but I only really care about Windows, therefore there's a simple `build.bat` script that will build the script into a single `media-tool.exe`. Also assumes you have `ffmpeg.exe` and `ffprobe.exe` somewhere in your `%PATH%`.
 
 For development/direct use, the script supports [`uv`](https://github.com/astral-sh/uv) via its inline script metadata — just run `uv run media-tool.py <command>`.
