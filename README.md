@@ -17,6 +17,10 @@ __Commands:__
 
 All commands support `--help` for usage details.
 
+## Build Dependencies
+
+* [uv](https://docs.astral.sh/uv/) — required to run the build script (uses `uvx`)
+
 ## Installation
 
 _Technically_ this is all portable Python but I only really care about Windows, therefore there's a simple `build.bat` script that will build the script into a single `media-tool.exe`. Also assumes you have `ffmpeg.exe` and `ffprobe.exe` somewhere in your `%PATH%`.
