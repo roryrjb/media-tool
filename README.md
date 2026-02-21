@@ -4,6 +4,8 @@
 
 This is basically a wrapper script for `ffmpeg` that I use regularly, mostly to quickly edit dog photos and videos... no seriously.
 
+This script has been written for and only tested on Windows with an NVIDIA GPU.
+
 __Commands:__
 
 * `media-tool clipify` - Reduce framerate by half if over 45fps (NVENC)
@@ -17,12 +19,14 @@ __Commands:__
 
 All commands support `--help` for usage details.
 
-## Build Dependencies
+## Requirements
 
-* [uv](https://docs.astral.sh/uv/) — required to run the build script (uses `uvx`)
+* Python 3.14+
+* `ffmpeg.exe` and `ffprobe.exe` in your `%PATH%`
+* Python dependencies listed in `requirements.txt` — install with `pip install -r requirements.txt`
 
-## Installation
+## Build
 
-_Technically_ this is all portable Python but I only really care about Windows, therefore there's a simple `build.bat` script that will build the script into a single `media-tool.exe`. Also assumes you have `ffmpeg.exe` and `ffprobe.exe` somewhere in your `%PATH%`.
+Requires [uv](https://docs.astral.sh/uv/) (uses `uvx` to run PyInstaller).
 
-For development/direct use, the script supports [`uv`](https://github.com/astral-sh/uv) via its inline script metadata — just run `uv run media-tool.py <command>`.
+Run `build.bat` to build into a single `media-tool.exe`.

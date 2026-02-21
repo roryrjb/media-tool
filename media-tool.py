@@ -1,11 +1,3 @@
-#!/usr/bin/env -S uv run --script
-# -*- mode: python -*-
-# /// script
-# requires-python = ">=3.14"
-# dependencies = [
-#     "ffmpeg-python",
-# ]
-# ///
 import sys
 import argparse
 from os import path
