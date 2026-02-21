@@ -11,12 +11,17 @@ import argparse
 from os import path
 import ffmpeg
 from datetime import datetime
+
 TIME_FORMAT = "%H:%M:%S"
 DEFAULT_SCALE_RESIZE = 640
 DEFAULT_SCALE_GIF = 320
+
+
 def time_validator(input_str: str):
     datetime.strptime(input_str, TIME_FORMAT)
     return input_str
+
+
 def get_video_fps(video_path):
     probe = ffmpeg.probe(video_path)
     video_stream = next(
@@ -32,6 +37,8 @@ def get_video_fps(video_path):
             fps = float(numerator) / float(denominator)
             return fps
     return None
+
+
 def change_video_fps(input_path, output_path, target_fps):
     stream = ffmpeg.input(input_path, hwaccel="cuda")
     stream = ffmpeg.output(
@@ -44,6 +51,8 @@ def change_video_fps(input_path, output_path, target_fps):
         acodec="copy",
     )
     ffmpeg.run(stream, overwrite_output=True)
+
+
 def cmd_clipify(args):
     (name, ext) = path.splitext(args.filename)
     out = f"{name}-clip{ext}"
@@ -51,6 +60,8 @@ def cmd_clipify(args):
     if original_framerate > 45:
         new_framerate = original_framerate / 2
         change_video_fps(args.filename, out, new_framerate)
+
+
 def cmd_convert(args):
     for filename in args.filenames:
         (name, _) = path.splitext(filename)
@@ -64,6 +75,8 @@ def cmd_convert(args):
         if args.dry_run:
             continue
         cmd.run()
+
+
 def cmd_cut(args):
     (name, ext) = path.splitext(args.filename)
     out = args.name if args.name else f"{name}-cut{ext}"
@@ -78,6 +91,8 @@ def cmd_cut(args):
     if args.dry_run:
         sys.exit(0)
     cmd.run()
+
+
 def cmd_gif(args):
     (name, _) = path.splitext(args.filename)
     out = args.name if args.name else f"{name}.gif"
@@ -87,6 +102,8 @@ def cmd_gif(args):
     )
     print(" ".join(cmd.compile()))
     cmd.run()
+
+
 def cmd_reencode(args):
     for filename in args.filenames:
         (name, ext) = path.splitext(filename)
@@ -102,6 +119,8 @@ def cmd_reencode(args):
         if args.dry_run:
             continue
         cmd.run()
+
+
 def cmd_remove_audio(args):
     (name, ext) = path.splitext(args.filename)
     out = args.name if args.name else f"{name}-noaudio{ext}"
@@ -112,10 +131,14 @@ def cmd_remove_audio(args):
     )
     print(" ".join(cmd.compile()))
     cmd.run()
+
+
 def cmd_resize(args):
     (name, ext) = path.splitext(args.filename)
     out = f"{name}-resized{ext}"
-    cmd = ffmpeg.input(args.filename, hwaccel="cuda", hwaccel_output_format="cuda").output(
+    cmd = ffmpeg.input(
+        args.filename, hwaccel="cuda", hwaccel_output_format="cuda"
+    ).output(
         out,
         vf=f"scale_cuda=-1:{args.scale}:interp_algo=lanczos",
         vcodec="h264_nvenc",
@@ -127,6 +150,8 @@ def cmd_resize(args):
     if args.dry_run:
         sys.exit(0)
     cmd.run()
+
+
 def cmd_slomo(args):
     (name, ext) = path.splitext(args.filename)
     out = args.name if args.name else f"{name}-slow{ext}"
@@ -144,6 +169,8 @@ def cmd_slomo(args):
     if args.dry_run:
         sys.exit(0)
     cmd.run()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Unified ffmpeg video processing tool")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -246,5 +273,7 @@ def main():
         "slomo": cmd_slomo,
     }
     command_map[args.command](args)
+
+
 if __name__ == "__main__":
     main()
